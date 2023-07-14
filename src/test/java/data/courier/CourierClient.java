@@ -34,4 +34,18 @@ public class CourierClient extends RequestSpec {
                 .spec(getSpec())
                 .delete("/api/v1/courier/" + id);
     }
+    public Response deleteCourierInSystem(Courier courier) {
+        Response responseGetID = given()
+                .header("Content-Type", "application/json")
+                .and()
+                .body(courier)
+                .when()
+                .post("/api/v1/courier/login");
+        Response response = given()
+                .header("Content-Type", "application/json")
+                .and()
+                .when()
+                .delete("/api/v1/courier/" + responseGetID.path("id"));
+        return response;
+    }
 }
